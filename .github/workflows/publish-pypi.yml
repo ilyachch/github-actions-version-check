@@ -1,0 +1,35 @@
+name: Publish To PyPI
+on:
+  workflow_dispatch:
+#  release:
+#    types:
+#      - published
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    name: Build And Publish
+    runs-on: ubuntu-latest
+    environment:
+      name: PyPI
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v8.1.0
+      - name: Verify tag matches project version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          project_version=$(uv version --short)
+          if [ "v$project_version" != "$RELEASE_TAG" ]; then
+            echo "Release tag ($RELEASE_TAG) does not match project version (v$project_version). Aborting publish."
+            exit 1
+          fi
+      - name: Build distributions
+        run: uvx --from build pyproject-build --sdist --wheel --outdir dist
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.14.0

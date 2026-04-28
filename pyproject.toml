@@ -1,0 +1,98 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "github-actions-version-check"
+version = "0.999.0"
+description = "Check and update GitHub Action versions in workflow files."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Ilya Chichak", email = "ilyachch@gmail.com" }
+]
+
+license = { text = "MIT" }
+
+keywords = [
+    "github",
+    "github-actions",
+    "ci",
+    "pre-commit",
+    "automation",
+    "devtools"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Utilities"
+]
+
+dependencies = [
+    "httpx>=0.28.1",
+    "typer>=0.12.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/ilyachch/github-actions-version-check"
+Repository = "https://github.com/ilyachch/github-actions-version-check"
+Issues = "https://github.com/ilyachch/github-actions-version-check/issues"
+
+[project.scripts]
+"github-actions-version-check" = "github_actions_version_check.cli:entrypoint"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/github_actions_version_check"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.20.2",
+    "pytest>=8.4.0",
+    "ruff>=0.15.11",
+]
+
+[tool.ruff]
+line-length = 88
+src = ["src", "tests"]
+target-version = "py313"
+
+[tool.ruff.format]
+quote-style = "single"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint]
+select = ["LOG", "I", "F401", "C901"]
+fixable = ["ALL"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.mypy]
+files = ["."]
+python_version = "3.11"
+check_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+strict_equality = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

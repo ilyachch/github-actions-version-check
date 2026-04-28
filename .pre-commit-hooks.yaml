@@ -1,0 +1,7 @@
+- id: github-actions-version-check
+  name: github-actions-version-check
+  description: Check GitHub Action refs used in workflow files.
+  entry: github-actions-version-check
+  language: python
+  pass_filenames: false
+  files: ^\.github/workflows/.*\.(yml|yaml)$
