@@ -1,9 +1,8 @@
 name: Publish To PyPI
 on:
-  workflow_dispatch:
-#  release:
-#    types:
-#      - published
+  release:
+    types:
+      - published
 permissions:
   contents: read
   id-token: write
