@@ -127,7 +127,7 @@ uses: owner/repo@v1.2.3
 ```yaml
 repos:
   - repo: https://github.com/ilyachch/github-actions-version-check
-    rev: vX.Y.Z
+    rev: v1.0.0
     hooks:
       - id: github-actions-version-check
         args: [--fix]
